@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './scss/styles/_app.scss';
+import "./scss/generic/_main.scss";
+import MedicationList from './components/MedicationList';
+
 
 function App() {
+  const [medications, setMedications] = useState([
+    { id: 1, name: 'Aspirin', dosage: '81mg', frequency: 'Daily', taken: false },
+    { id: 2, name: 'Lipitor', dosage: '20mg', frequency: 'Daily', taken: false },
+    { id: 3, name: 'Metformin', dosage: '1000mg', frequency: 'Twice daily', taken: false },
+  ]);
+
+  const toggleTaken = (id) => {
+    setMedications(medications.map(medication => {
+      if (medication.id === id) {
+        return { ...medication, taken: !medication.taken };
+      } else {
+        return medication;
+      }
+    }));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="app">
+        <h1 className="title">My Medications</h1>
+        <MedicationList medications={medications} toggleTaken={toggleTaken} />
+      </div>
   );
 }
 
