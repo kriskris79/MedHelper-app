@@ -1,33 +1,67 @@
-.add-reminder-form {
+.add-medication-form {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-top: 1rem;
-}
+  margin-bottom: 1rem;
 
-.add-reminder-form input,
-.add-reminder-form select {
-  margin-bottom: 0.5rem;
-}
+  & > div {
+    margin-bottom: 1rem;
+  }
 
-.add-reminder-form button {
-  margin-top: 1rem;
-}
+  label {
+    font-weight: bold;
+  }
 
-@media screen and (min-width: 768px) {
-  .add-reminder-form {
+  input,
+  select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 3px #aaaaaa;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: #009688;
+      color: #fff;
+      border: none;
+    }
+
+    .btn-secondary {
+      background-color: #f0f0f0;
+      color: #333;
+      border: none;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-  }
 
-  .add-reminder-form input,
-  .add-reminder-form select {
-    margin-bottom: 0;
-    margin-right: 1rem;
-  }
+    & > div {
+      margin-bottom: 0;
+      margin-right: 1rem;
+    }
 
-  .add-reminder-form button {
-    margin-top: 0;
+    .button-group {
+      margin-left: auto;
+    }
   }
 }
