@@ -1,0 +1,33 @@
+.add-reminder-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.add-reminder-form input,
+.add-reminder-form select {
+  margin-bottom: 0.5rem;
+}
+
+.add-reminder-form button {
+  margin-top: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .add-reminder-form {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .add-reminder-form input,
+  .add-reminder-form select {
+    margin-bottom: 0;
+    margin-right: 1rem;
+  }
+
+  .add-reminder-form button {
+    margin-top: 0;
+  }
+}
