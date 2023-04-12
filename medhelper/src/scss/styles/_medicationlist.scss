@@ -47,4 +47,129 @@
     text-transform: uppercase;
     text-align: center;
   }
-}
+
+  /* Extra small devices (Phones) */
+  @media screen and (max-width: 576px) {
+    li {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto auto;
+      text-align: center;
+    }
+
+    .name {
+      font-size: 1.2rem;
+    }
+
+    .dosage,
+    .frequency,
+    .time {
+      font-size: 1rem;
+    }
+  }
+
+  /* Small devices (Tablets) */
+  @media screen and (min-width: 577px) and (max-width: 768px) {
+    li {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      text-align: left;
+    }
+
+    .name {
+      font-size: 1.3rem;
+    }
+
+    .dosage,
+    .frequency {
+      font-size: 1.1rem;
+    }
+
+    .time {
+      font-size: 1rem;
+    }
+
+    .header {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* Medium devices (Desktops) */
+  @media screen and (min-width: 769px) and (max-width: 992px) {
+    .name {
+      font-size: 1.4rem;
+    }
+
+    .dosage,
+    .frequency {
+      font-size: 1.2rem;
+    }
+
+    .time {
+      font-size: 1rem;
+    }
+
+    .header {
+      font-size: 1.3rem;
+    }
+  }
+
+  /* Large devices (Desktops) */
+  @media screen and (min-width: 993px) and (max-width: 1200px) {
+    .name {
+      font-size: 1.5rem;
+    }
+
+    .dosage,
+    .frequency {
+      font-size: 1.3rem;
+    }
+
+    .time {
+      font-size: 1.1rem;
+    }
+
+    .header {
+      font-size: 1.4rem;
+    }
+  }
+
+  /* Extra large devices (Desktops) */
+  @media screen and (min-width: 1201px) {
+    .name {
+      font-size: 1.6rem;
+    }
+
+    .dosage,
+    .frequency {
+      font-size: 1.4rem;
+    }
+
+    .time {
+      font-size: 1.2rem;
+    }
+
+    .header {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* Extra extra large devices (Desktops) */
+  @media screen and (min-width: 1201px) {
+    .name {
+      font-size: 1.7rem;
+    }
+
+    .dosage,
+    .frequency {
+      font-size: 1.5rem;
+    }
+
+    .time {
+      font-size: 1.3rem;
+    }
+
+    .header {
+      font-size: 1.6rem;
+    }
+  }
+  }
