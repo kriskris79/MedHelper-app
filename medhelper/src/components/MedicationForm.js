@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 
-
 function MedicationForm({ onSave, onCancel }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [frequency, setFrequency] = useState('');
     const [timesPerDay, setTimesPerDay] = useState('');
     const [time, setTime] = useState('');
+    const [dosage, setDosage] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSave({ name, description, frequency, timesPerDay, time });
+        onSave({ name, description, frequency, timesPerDay, time, dosage });
         setName('');
         setDescription('');
         setFrequency('');
         setTimesPerDay('');
         setTime('');
+        setDosage('');
     };
 
     return (
@@ -25,8 +26,8 @@ function MedicationForm({ onSave, onCancel }) {
                 <input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)} />
             </div>
             <div>
-                <label htmlFor="description">Dosage/Description</label>
-                <input type="text" id="description" value={description} onChange={(event) => setDescription(event.target.value)} />
+                <label htmlFor="dosage">Dosage</label>
+                <input type="text" id="dosage" value={dosage} onChange={(event) => setDosage(event.target.value)} />
             </div>
             <div>
                 <label htmlFor="frequency">Frequency</label>

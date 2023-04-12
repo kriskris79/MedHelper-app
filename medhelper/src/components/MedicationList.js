@@ -1,3 +1,4 @@
+import React from 'react';
 import Medication from './Medication';
 
 function MedicationList({ medications, toggleTaken }) {
