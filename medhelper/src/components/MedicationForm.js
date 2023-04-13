@@ -6,29 +6,47 @@ function MedicationForm({ onSave, onCancel }) {
     const [frequency, setFrequency] = useState('');
     const [timesPerDay, setTimesPerDay] = useState('');
     const [times, setTimes] = useState([]);
-    const [time, setTime] = useState('');
     const [dosage, setDosage] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSave({ name, description, frequency, timesPerDay, times, dosage });
+
+        let newFrequency = frequency;
+        let newTimes = times;
+
+        if (frequency === 'x-times-a-day') {
+            newFrequency = `${timesPerDay} times a day`;
+            newTimes = times;
+        }
+
+        onSave({ name, description, frequency: newFrequency, times: newTimes, dosage });
         setName('');
         setDescription('');
         setFrequency('');
         setTimesPerDay('');
         setTimes([]);
-        setTime('');
         setDosage('');
     };
 
     const handleAddTime = () => {
-        setTimes([...times, time]);
-        setTime('');
+        setTimes((prevTimes) => [...prevTimes, '']);
     };
 
     const handleRemoveTime = (index) => {
-        setTimes([...times.slice(0, index), ...times.slice(index + 1)]);
+        setTimes((prevTimes) => {
+            const newTimes = [...prevTimes];
+            newTimes.splice(index, 1);
+            return newTimes;
+        });
     };
+
+    const handleTimeChange = (event, index) => {
+        const newTimes = [...times];
+        newTimes[index] = event.target.value;
+        setTimes(newTimes);
+    };
+
+
 
     return (
         <form className="add-medication-form" onSubmit={handleSubmit}>
@@ -44,11 +62,7 @@ function MedicationForm({ onSave, onCancel }) {
                 <label htmlFor="frequency">Frequency</label>
                 <select id="frequency" value={frequency} onChange={(event) => setFrequency(event.target.value)}>
                     <option value="">-- Select Frequency --</option>
-                    <option value="daily">Daily</option>
-                    <option value="hourly">Every x hours</option>
                     <option value="x-times-a-day">X times a day</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
                 </select>
             </div>
             {frequency === 'hourly' && (
@@ -61,22 +75,30 @@ function MedicationForm({ onSave, onCancel }) {
                 <div>
                     <label htmlFor="timesPerDay">X times a day</label>
                     <input type="number" id="timesPerDay" value={timesPerDay} onChange={(event) => setTimesPerDay(event.target.value)} />
-                    {times.map((t, index) => (
-                        <div key={index}>
-                            <label>Time {index + 1}</label>
-                            <input type="time" value={t} readOnly />
-                            <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
-                        </div>
-                    ))}
-                    {times.length < timesPerDay && (
+                    {timesPerDay > 0 && (
                         <div>
-                            <label>Time {times.length + 1}</label>
-                            <input type="time" value={time} onChange={(event) => setTime(event.target.value)} />
-                            <button type="button" onClick={handleAddTime}>Add Time</button>
+                            <p>Please enter the times you need to take the medication:</p>
+                            {times.map((time, index) => (
+                                <div key={index}>
+                                    <input type="time" value={time} onChange={(event) => handleTimeChange(event, index)} />
+                                    <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
+                                </div>
+                            ))}
+                            {times.length < timesPerDay && (
+                                <button type="button" onClick={handleAddTime}>Add Time</button>
+                            )}
                         </div>
                     )}
                 </div>
             )}
+            <div className="button-group">
+                <button type="submit" className="btn-primary">
+                    Add Medication
+                </button>
+                <button type="button" className="btn-secondary" onClick={onCancel}>
+                    Cancel
+                </button>
+            </div>
         </form>
     );
 }
