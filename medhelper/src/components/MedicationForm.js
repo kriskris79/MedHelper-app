@@ -5,18 +5,29 @@ function MedicationForm({ onSave, onCancel }) {
     const [description, setDescription] = useState('');
     const [frequency, setFrequency] = useState('');
     const [timesPerDay, setTimesPerDay] = useState('');
+    const [times, setTimes] = useState([]);
     const [time, setTime] = useState('');
     const [dosage, setDosage] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSave({ name, description, frequency, timesPerDay, time, dosage });
+        onSave({ name, description, frequency, timesPerDay, times, dosage });
         setName('');
         setDescription('');
         setFrequency('');
         setTimesPerDay('');
+        setTimes([]);
         setTime('');
         setDosage('');
+    };
+
+    const handleAddTime = () => {
+        setTimes([...times, time]);
+        setTime('');
+    };
+
+    const handleRemoveTime = (index) => {
+        setTimes([...times.slice(0, index), ...times.slice(index + 1)]);
     };
 
     return (
@@ -50,23 +61,22 @@ function MedicationForm({ onSave, onCancel }) {
                 <div>
                     <label htmlFor="timesPerDay">X times a day</label>
                     <input type="number" id="timesPerDay" value={timesPerDay} onChange={(event) => setTimesPerDay(event.target.value)} />
+                    {times.map((t, index) => (
+                        <div key={index}>
+                            <label>Time {index + 1}</label>
+                            <input type="time" value={t} readOnly />
+                            <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
+                        </div>
+                    ))}
+                    {times.length < timesPerDay && (
+                        <div>
+                            <label>Time {times.length + 1}</label>
+                            <input type="time" value={time} onChange={(event) => setTime(event.target.value)} />
+                            <button type="button" onClick={handleAddTime}>Add Time</button>
+                        </div>
+                    )}
                 </div>
             )}
-            {(frequency === 'daily' || frequency === 'hourly' || frequency === 'x-times-a-day') && (
-                <div>
-                    <label htmlFor="time">Time</label>
-                    <input type="time" id="time" value={time} onChange={(event) => setTime(event.target.value)} />
-                    {frequency === 'x-times-a-day' && <p className="hint">Enter times in 24-hour format (e.g. 08:00, 13:00, 20:00)</p>}
-                </div>
-            )}
-            <div className="button-group">
-                <button type="submit" className="btn-primary">
-                    Add Medication
-                </button>
-                <button type="button" className="btn-secondary" onClick={onCancel}>
-                    Cancel
-                </button>
-            </div>
         </form>
     );
 }
