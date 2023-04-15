@@ -12,7 +12,7 @@ connection.connect((err) => {
     console.log('Connected to MySQL server!');
 });
 
-connection.query('SELECT * FROM your_table', (err, results) => {
+connection.query('SELECT * FROM medication2', (err, results) => {
     if (err) throw err;
     console.log(results);
 });
