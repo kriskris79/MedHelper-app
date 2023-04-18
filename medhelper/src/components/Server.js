@@ -25,7 +25,7 @@ connection.connect((error) => {
     }
 });
 
-app.post('/api/medications', (req, res) => {
+app.post('/api/medication2', (req, res) => {
     const { name, description, frequency, times, dosage } = req.body;
     const sql = `INSERT INTO medications (name, description, frequency, times, dosage) VALUES (?, ?, ?, ?, ?)`;
     const values = [name, description, frequency, times, dosage];
@@ -39,8 +39,8 @@ app.post('/api/medications', (req, res) => {
     });
 });
 
-app.get('/api/medications', (req, res) => {
-    const sql = `SELECT * FROM medications`;
+app.get('/api/medication2', (req, res) => {
+    const sql = `SELECT * FROM medication2`;
     connection.query(sql, (error, results) => {
         if (error) {
             console.error('Error retrieving medications: ', error);
