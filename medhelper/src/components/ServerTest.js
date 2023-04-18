@@ -1,7 +1,8 @@
+
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
-const jwt = require('jose');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const secret = 'secret-key';
@@ -25,7 +26,7 @@ connection.connect((error) => {
 });
 
 const generateToken = (user) => {
-    return jwt.sign({ user }, secret, { expiresIn: '1h' });
+    return jwt.sign({ user }, secret, { expiresIn: '365d' });
 };
 
 const verifyToken = (token) => {
@@ -63,6 +64,15 @@ app.post('/api/medication2', authenticate, (req, res) => {
 
         res.status(201).send({ message: 'Medication saved successfully' });
     });
+});
+
+app.post('/api/reset-token', (req, res) => {
+    const user = req.body.user;
+    const newToken = generateToken(user);
+
+    // Store the new token in a database or other persistent storage
+
+    res.status(200).send({ message: 'Token reset successful', newToken });
 });
 
 app.listen(3000, () => {
