@@ -127,7 +127,7 @@ function MedicationForm({ onSave, onCancel }) {
             newTimes = times;
         }
 
-        axios.post('http://localhost:3000/medication', { name, description, frequency: newFrequency, times: newTimes, dosage })
+        axios.post('http://localhost:3000/medication2', { name, description, frequency: newFrequency, times: newTimes, dosage })
             .then((response) => {
                 console.log(response.data);
                 onSave({ name, description, frequency: newFrequency, times: newTimes, dosage });
