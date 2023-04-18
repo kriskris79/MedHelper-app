@@ -105,8 +105,8 @@
 //
 // export default MedicationForm;
 
-
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function MedicationForm({ onSave, onCancel }) {
     const [name, setName] = useState('');
@@ -127,13 +127,20 @@ function MedicationForm({ onSave, onCancel }) {
             newTimes = times;
         }
 
-        onSave({ name, description, frequency: newFrequency, times: newTimes, dosage });
-        setName('');
-        setDescription('');
-        setFrequency('');
-        setTimesPerDay('');
-        setTimes([]);
-        setDosage('');
+        axios.post('http://localhost:3000/medication', { name, description, frequency: newFrequency, times: newTimes, dosage })
+            .then((response) => {
+                console.log(response.data);
+                onSave({ name, description, frequency: newFrequency, times: newTimes, dosage });
+                setName('');
+                setDescription('');
+                setFrequency('');
+                setTimesPerDay('');
+                setTimes([]);
+                setDosage('');
+            })
+            .catch((error) => {
+                console.error('Error saving medication: ', error);
+            });
     };
 
     const handleAddTime = () => {
@@ -154,6 +161,8 @@ function MedicationForm({ onSave, onCancel }) {
         setTimes(newTimes);
     };
 
+
+
     return (
         <form className="add-medication-form" onSubmit={handleSubmit}>
             <div>
@@ -165,14 +174,9 @@ function MedicationForm({ onSave, onCancel }) {
                 <input type="text" id="dosage" value={dosage} onChange={(event) => setDosage(event.target.value)} />
             </div>
             <div>
-                <label htmlFor="description">Description</label>
-                <textarea id="description" value={description} onChange={(event) => setDescription(event.target.value)} />
-            </div>
-            <div>
                 <label htmlFor="frequency">Frequency</label>
                 <select id="frequency" value={frequency} onChange={(event) => setFrequency(event.target.value)}>
                     <option value="">-- Select Frequency --</option>
-                    <option value="hourly">Hourly</option>
                     <option value="x-times-a-day">X times a day</option>
                 </select>
             </div>
@@ -182,7 +186,7 @@ function MedicationForm({ onSave, onCancel }) {
                     <input type="number" id="timesPerDay" value={timesPerDay} onChange={(event) => setTimesPerDay(event.target.value)} />
                 </div>
             )}
-                        {frequency === 'x-times-a-day' && (
+            {frequency === 'x-times-a-day' && (
                 <div>
                     <label htmlFor="timesPerDay">X times a day</label>
                     <input type="number" id="timesPerDay" value={timesPerDay} onChange={(event) => setTimesPerDay(event.target.value)} />
