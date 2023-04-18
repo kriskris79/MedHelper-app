@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
@@ -9,7 +11,18 @@ const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    authPlugins: {
+        'mysql_native_password': {}
+    }
+});
+
+connection.connect((error) => {
+    if (error) {
+        console.error('Error connecting to the database: ', error);
+    } else {
+        console.log('Connected to the database.');
+    }
 });
 
 app.post('/api/medications', (req, res) => {
@@ -22,6 +35,18 @@ app.post('/api/medications', (req, res) => {
             res.sendStatus(500);
         } else {
             res.sendStatus(200);
+        }
+    });
+});
+
+app.get('/api/medications', (req, res) => {
+    const sql = `SELECT * FROM medications`;
+    connection.query(sql, (error, results) => {
+        if (error) {
+            console.error('Error retrieving medications: ', error);
+            res.sendStatus(500);
+        } else {
+            res.json(results);
         }
     });
 });
