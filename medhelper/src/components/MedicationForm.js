@@ -127,7 +127,7 @@ function MedicationForm({ onSave, onCancel }) {
             newTimes = times;
         }
 
-        axios.post(process.env.REACT_APP_API_URL, { name, description, frequency: newFrequency, times: newTimes, dosage })
+        axios.post(process.env.REACT_APP_API_URL + '/api/medication2', { name, description, frequency: newFrequency, times: newTimes, dosage })
             .then((response) => {
                 console.log(response.data);
                 onSave({ name, description, frequency: newFrequency, times: newTimes, dosage });
