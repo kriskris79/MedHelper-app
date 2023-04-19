@@ -247,7 +247,7 @@ function MedicationForm({ onSave, onCancel, token }) {
             newTimes = times;
         }
 
-        axios.post(process.env.REACT_APP_API_URL + '/api/medication2', { name, frequency: newFrequency, times: newTimes, dosage }, {
+        axios.post(process.env.REACT_APP_API_URL, { name, frequency: newFrequency, times: newTimes, dosage }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
