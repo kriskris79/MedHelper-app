@@ -83,12 +83,17 @@ require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const app = express();
 const secret = 'secret-key';
 
 app.use(express.json());
-
+app.use(cors({
+    origin: [ 'http://localhost:3000', 'http://localhost:3001', 'http://mysql2.kkak.dreamhosters.com/medication2', 'http://mysql2.kkak.dreamhosters.com' ]
+}));
+// app.use(cors({ origin: 'http://localhost:3001' }));
+// app.use(cors({ origin: 'http://mysql2.kkak.dreamhosters.com/medication2' }));
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -158,5 +163,5 @@ app.post('/api/reset-token', (req, res) => {
 });
 
 app.listen(3001, () => {
-    console.log('Server started on port 3000');
+    console.log('Server started on port 3001');
 });

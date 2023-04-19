@@ -247,9 +247,21 @@ function MedicationForm({ onSave, onCancel, token }) {
             newTimes = times;
         }
 
-        axios.post(process.env.REACT_APP_API_URL, { name, frequency: newFrequency, times: newTimes, dosage }, {
+        // console.log(process.env.REACT_APP_API_URL);
+        // const postUrl = process.env.REACT_APP_API_URL + '/api/medication2';
+        // console.log(postUrl);
+
+        // axios.post(postUrl, { name, frequency: newFrequency, times: newTimes, dosage }, {
+        //     headers: {
+        //         'Authorization': `Bearer ${token}`
+        axios.post('http://mysql2.kkak.dreamhosters.com/medication2', { name, frequency: newFrequency, times: newTimes, dosage }, {
             headers: {
                 'Authorization': `Bearer ${token}`
+
+
+        // axios.post(process.env.REACT_APP_API_URL, { name, frequency: newFrequency, times: newTimes, dosage }, {
+        //     headers: {
+        //         'Authorization': `Bearer ${token}`
             }
         })
             .then((response) => {
