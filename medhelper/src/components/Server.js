@@ -27,7 +27,7 @@ connection.connect((error) => {
 
 app.post('/api/medication2', (req, res) => {
     const { name, description, frequency, times, dosage } = req.body;
-    const sql = `INSERT INTO medications (name, description, frequency, times, dosage) VALUES (?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO medication2 (name, description, frequency, times, dosage) VALUES (?, ?, ?, ?, ?)`;
     const values = [name, description, frequency, times, dosage];
     connection.query(sql, values, (error, results) => {
         if (error) {

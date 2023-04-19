@@ -127,7 +127,7 @@ function MedicationForm({ onSave, onCancel }) {
             newTimes = times;
         }
 
-        axios.post('http://localhost:3000/medications2', { name, description, frequency: newFrequency, times: newTimes, dosage })
+        axios.post(process.env.REACT_APP_API_URL, { name, description, frequency: newFrequency, times: newTimes, dosage })
             .then((response) => {
                 console.log(response.data);
                 onSave({ name, description, frequency: newFrequency, times: newTimes, dosage });
@@ -140,6 +140,7 @@ function MedicationForm({ onSave, onCancel }) {
             })
             .catch((error) => {
                 console.error('Error saving medication: ', error);
+                alert('There was an error saving the medication. Please try again later.');
             });
     };
 
