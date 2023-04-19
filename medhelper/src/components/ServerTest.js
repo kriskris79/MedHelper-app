@@ -90,7 +90,15 @@ const secret = 'secret-key';
 
 app.use(express.json());
 app.use(cors({
-    origin: [ 'http://localhost:3000', 'http://localhost:3001', 'http://mysql2.kkak.dreamhosters.com/medication2', 'http://mysql2.kkak.dreamhosters.com' ]
+    origin: (origin, callback) => {
+        const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://mysql2.kkak.dreamhosters.com/medication2', 'http://mysql2.kkak.dreamhosters.com'];
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
 }));
 // app.use(cors({ origin: 'http://localhost:3001' }));
 // app.use(cors({ origin: 'http://mysql2.kkak.dreamhosters.com/medication2' }));

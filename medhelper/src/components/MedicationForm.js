@@ -254,15 +254,18 @@ function MedicationForm({ onSave, onCancel, token }) {
         // axios.post(postUrl, { name, frequency: newFrequency, times: newTimes, dosage }, {
         //     headers: {
         //         'Authorization': `Bearer ${token}`
-        axios.post('http://mysql2.kkak.dreamhosters.com/medication2', { name, frequency: newFrequency, times: newTimes, dosage }, {
+        // axios.post('http://mysql2.kkak.dreamhosters.com/medication2', { name, frequency: newFrequency, times: newTimes, dosage }, {
+        //     headers: {
+        //         'Authorization': `Bearer ${token}`
+        axios.post('http://mysql2.kkak.dreamhosters.com:3001/medication2', { name, frequency: newFrequency, times: newTimes, dosage }, {
             headers: {
                 'Authorization': `Bearer ${token}`
-
 
         // axios.post(process.env.REACT_APP_API_URL, { name, frequency: newFrequency, times: newTimes, dosage }, {
         //     headers: {
         //         'Authorization': `Bearer ${token}`
-            }
+            },
+            withCredentials: true,
         })
             .then((response) => {
                 console.log(response.data);
