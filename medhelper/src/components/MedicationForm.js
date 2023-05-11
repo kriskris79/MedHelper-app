@@ -277,8 +277,13 @@ function MedicationForm({ onSave, onCancel, token }) {
                 setDosage('');
             })
             .catch((error) => {
-                console.error('Error saving medication: ', error);
-                alert('There was an error saving the medication. Please try again later.');
+                if (error.message === 'Network Error') {
+                    console.error('Network error:', error);
+                    alert('There was a network error. Please check your connection and try again.');
+                } else {
+                    console.error('Error saving medication: ', error);
+                    alert('There was an error saving the medication. Please try again later.');
+                }
             });
     };
 
