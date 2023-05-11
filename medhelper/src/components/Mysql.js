@@ -14,7 +14,7 @@ connection.connect((err) => {
         return;
     }
 
-    console.log('Connected to MySQL server on DreamCpmpute!');
+    console.log('Connected to MySQL server on DreamCompute!');
 
     connection.query('SELECT * FROM medication2', (err, results) => {
         if (err) {
