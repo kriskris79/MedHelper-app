@@ -91,7 +91,12 @@ const secret = 'secret-key';
 app.use(express.json());
 app.use(cors({
     origin: (origin, callback) => {
-        const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://mysql2.kkak.dreamhosters.com/medication2', 'http://mysql2.kkak.dreamhosters.com'];
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'http://localhost:3001',
+            'http://208.113.134.188',
+           // 'http://mysql2.kkak.dreamhosters.com',
+        ];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
@@ -163,6 +168,17 @@ app.post('/api/medication2', authenticate, (req, res) => {
     });
 });
 
+//check for network errors
+app.use((error, req, res, next) => {
+    if (error.code === 'ERR_NETWORK') {
+        console.error('Network error:', error);
+        res.status(500).send({ message: 'There was a network error. Please check your connection and try again.' });
+    } else {
+        next(error);
+    }
+});
+
+
 app.post('/api/reset-token', (req, res) => {
     const ip = req.ip;
     const newToken = generateToken(ip);
@@ -170,6 +186,14 @@ app.post('/api/reset-token', (req, res) => {
     res.status(200).send({ message: 'Token reset successful', newToken });
 });
 
-app.listen(3001, () => {
-    console.log('Server started on port 3001');
+// app.listen(3001, () => {
+//     console.log('Server started on port 3001');
+// });
+
+app.listen(3307, () => {
+    console.log('Server started on port 3307');
 });
+
+// app.listen(port, () => {
+//     console.log(`Server started on port ${port}`);
+// });
