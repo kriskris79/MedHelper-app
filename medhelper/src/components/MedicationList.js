@@ -1,7 +1,7 @@
 import React from 'react';
 import Medication from './Medication';
 
-function MedicationList({ medications, toggleTaken }) {
+function MedicationList({ medications, toggleTaken, deleteMedication }) {
     return (
         <ul className="medication-list">
             <li className="header">
@@ -10,12 +10,14 @@ function MedicationList({ medications, toggleTaken }) {
                 <p className="frequency">Frequency</p>
                 <p className="time">Time</p>
                 <p className="taken">Taken</p>
+                <p className="delete">Delete Medication</p>
             </li>
             {medications.map((medication) => (
                 <Medication
                     key={medication.id}
                     medication={medication}
                     toggleTaken={toggleTaken}
+                    onDelete={deleteMedication}
                 />
             ))}
         </ul>
