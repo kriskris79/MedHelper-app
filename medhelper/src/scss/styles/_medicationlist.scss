@@ -6,7 +6,7 @@
 
   li {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns:  0.25fr 0.25fr 0.25fr 0.25fr 0.25fr 0.25fr;
     align-items: center;
     justify-content: space-between;
     background-color: #f0f0f0;
@@ -14,7 +14,7 @@
     margin-bottom: 1rem;
     padding: 1rem;
     transition: background-color 0.2s ease-in-out;
-
+    justify-items: start;
     &:hover {
       cursor: pointer;
       background-color: #e0e0e0;
