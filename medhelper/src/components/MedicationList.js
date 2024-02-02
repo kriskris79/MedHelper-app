@@ -5,7 +5,7 @@ function MedicationList({ medications, toggleTaken, deleteMedication }) {
     return (
         <ul className="medication-list">
             <li className="header">
-                <p className="name">My Medication</p>
+                <p className="name">Name</p>
                 <p className="dosage">Dosage</p>
                 <p className="frequency">Frequency</p>
                 <p className="time">Time</p>
