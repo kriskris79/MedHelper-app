@@ -94,8 +94,11 @@ app.use(cors({
         const allowedOrigins = [
             'http://localhost:3000',
             'http://localhost:3001',
-            'http://208.113.134.188',
-           // 'http://mysql2.kkak.dreamhosters.com',
+            'http://localhost:3006',
+            'http://localhost:3306',
+            'http://192.168.0.2:3001',
+           // 'http://208.113.134.188',
+            'http://mysql2.kkak.dreamhosters.com',
         ];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
@@ -190,8 +193,8 @@ app.post('/api/reset-token', (req, res) => {
 //     console.log('Server started on port 3001');
 // });
 
-app.listen(3307, () => {
-    console.log('Server started on port 3307');
+app.listen(3306, () => {
+    console.log('Server started on port 3306');
 });
 
 // app.listen(port, () => {
