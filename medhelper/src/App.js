@@ -10,9 +10,9 @@ function App() {
   const [medications, setMedications] = useState(() => {
     const storedMedications = localStorage.getItem('medications');
     return storedMedications ? JSON.parse(storedMedications) : [
-      { id: 1, name: 'Aspirin', dosage: '81mg', frequency: 'Daily', taken: false },
-      { id: 2, name: 'Lipitor', dosage: '20mg', frequency: 'Daily', taken: false },
-      { id: 3, name: 'Metformin', dosage: '1000mg', frequency: 'Twice daily', taken: false },
+      { id: 1, name: 'Aspirin', dosage: '81mg', frequency: 'Daily', times: ['08:00'] , taken: false },
+      { id: 2, name: 'Lipitor', dosage: '20mg', frequency: 'Daily', times: ['09:25'] , taken: false },
+      { id: 3, name: 'Metformin', dosage: '1000mg', frequency: 'Twice daily', times: ['10:00', '11:03'] ,taken: false },
     ];
   });
   const [showForm, setShowForm] = useState(false);
