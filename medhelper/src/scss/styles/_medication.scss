@@ -1,33 +1,71 @@
 .medication {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
   align-items: center;
-  justify-content: space-between;
   background-color: #f0f0f0;
   border-radius: 5px;
-  margin-bottom: 1rem;
   padding: 1rem;
   transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #e0e0e0;
-  }
 
   &.taken {
     background-color: #d0d0d0;
   }
-}
 
-.name {
-  font-size: 1.5rem;
-  margin: 0;
-}
+  .name {
+    font-size: 1.5rem;
+    margin: 0;
+  }
 
-.dosage,
-.frequency,
-.time {
-  font-size: 1rem;
-  margin: 0;
+  .dosage,
+  .frequency,
+  .time {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .times-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .taken {
+    display: flex;
+    align-items: center;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #009688;
+    color: #fff;
+    font-size: 1rem;
+    &:hover {
+      background-color: darken(#009688, 5%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    .times-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+  }
 }
 
 

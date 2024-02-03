@@ -8,6 +8,10 @@ function Medication({ medication, toggleTaken, onDelete }) {
         displayFrequency = `${times.length} times a day`;
     }
 
+    const handleTakenChange = (index) => {
+        toggleTaken(id,index); // need to handel an index
+    };
+
     const handleDelete = () => {
         if (window.confirm('Are you sure you want to delete this medication?')) {
             onDelete(id);
@@ -24,18 +28,25 @@ function Medication({ medication, toggleTaken, onDelete }) {
                     <p className="times">Times:</p>
                     <ul className="times-list">
                         {times.map((time, index) => (
-                            <li key={index}>{time}</li>
+                            <li key={index}>{time}
+                                <input
+                                    type="checkbox"
+                                    checked={taken[index]}
+                                    onChange={() => handleTakenChange(index)}
+                                />
+                            </li>
+                            // <li key={index}>{time}</li>
                         ))}
                     </ul>
                 </div>
             )}
-            <div className="taken">
-                <input
-                    type="checkbox"
-                    checked={taken}
-                    onChange={() => toggleTaken(id)}
-                />
-            </div>
+            {/*<div className="taken">*/}
+            {/*    <input*/}
+            {/*        type="checkbox"*/}
+            {/*        checked={taken}*/}
+            {/*        onChange={() => toggleTaken(id)}*/}
+            {/*    />*/}
+            {/*</div>*/}
             <div className="delete"> {/* New Column */}
                 <button onClick={handleDelete}>Delete</button>
             </div>
