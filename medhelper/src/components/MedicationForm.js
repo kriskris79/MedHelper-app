@@ -1,127 +1,356 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+import db from '../components/Firebase';
 
-function MedicationForm({ onSave, onCancel }) {
+function MedicationForm({ onCancel }) {
     const [name, setName] = useState('');
-    const [frequency, setFrequency] = useState('');
-    const [timesPerDay, setTimesPerDay] = useState('');
-    const [times, setTimes] = useState([]);
     const [dosage, setDosage] = useState('');
+    const [frequency, setFrequency] = useState('');
+    const [times, setTimes] = useState([]);
 
-    useEffect(() => {
-        const storedMedication = localStorage.getItem('medication');
-        if (storedMedication) {
-            const { name, frequency, timesPerDay, times, dosage } = JSON.parse(storedMedication);
-            setName(name);
-            setFrequency(frequency);
-            setTimesPerDay(timesPerDay);
-            setTimes(times);
-            setDosage(dosage);
-        }
-    }, []);
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-
-        let newFrequency = frequency;
-        let newTimes = times;
-
-        if (frequency === 'x-times-a-day') {
-            newFrequency = `${timesPerDay} times a day`;
-            newTimes = times;
-        }
 
         const newMedication = {
             name,
-            frequency: newFrequency,
-            times: newTimes,
             dosage,
+            frequency,
+            times,
         };
 
-        onSave(newMedication);
-
-        localStorage.setItem('medication', JSON.stringify(newMedication));
-
-        setName('');
-        setFrequency('');
-        setTimesPerDay('');
-        setTimes([]);
-        setDosage('');
+        try {
+            await addDoc(collection(db, "medications"), newMedication);
+            console.log("New medication added to Firestore.");
+            setName('');
+            setDosage('');
+            setFrequency('');
+            setTimes([]);
+        } catch (error) {
+            console.error("Error adding medication to Firestore: ", error);
+        }
     };
 
     const handleAddTime = () => {
-        setTimes((prevTimes) => [...prevTimes, '']);
+        setTimes([...times, '']);
     };
 
-    const handleRemoveTime = (index) => {
-        setTimes((prevTimes) => {
-            const newTimes = [...prevTimes];
-            newTimes.splice(index, 1);
-            return newTimes;
-        });
-    };
-
-    const handleTimeChange = (event, index) => {
+    const handleTimeChange = (index, event) => {
         const newTimes = [...times];
         newTimes[index] = event.target.value;
         setTimes(newTimes);
     };
 
+    const handleRemoveTime = (index) => {
+        const newTimes = [...times];
+        newTimes.splice(index, 1);
+        setTimes(newTimes);
+    };
+
     return (
-        <form className="add-medication-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="add-medication-form">
             <div>
-                <label htmlFor="name">Medication Name</label>
-                <input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)} />
+                <label htmlFor="name">Medication Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    autoComplete="off"
+                />
             </div>
+
             <div>
-                <label htmlFor="dosage">Dosage</label>
-                <input type="text" id="dosage" value={dosage} onChange={(event) => setDosage(event.target.value)} />
+                <label htmlFor="dosage">Dosage:</label>
+                <input
+                    type="text"
+                    id="dosage"
+                    value={dosage}
+                    onChange={(e) => setDosage(e.target.value)}
+                    autoComplete="off"
+                />
             </div>
+
             <div>
-                <label htmlFor="frequency">Frequency</label>
-                <select id="frequency" value={frequency} onChange={(event) => setFrequency(event.target.value)}>
-                    <option value="">-- Select Frequency --</option>
-                    <option value="x-times-a-day">X times a day</option>
-                </select>
+                <label htmlFor="frequency">Frequency:</label>
+                <input
+                    type="text"
+                    id="frequency"
+                    value={frequency}
+                    onChange={(e) => setFrequency(e.target.value)}
+                    autoComplete="off"
+                />
             </div>
-            {frequency === 'hourly' && (
-                <div>
-                    <label htmlFor="timesPerDay">Every x hours</label>
-                    <input type="number" id="timesPerDay" value={timesPerDay} onChange={(event) => setTimesPerDay(event.target.value)} />
+
+            {times.map((time, index) => (
+                <div key={index}>
+                    <label htmlFor={`time-${index}`}>{`Time ${index + 1}:`}</label>
+                    <input
+                        type="time"
+                        id={`time-${index}`}
+                        value={time}
+                        onChange={(e) => handleTimeChange(index, e)}
+                        autoComplete="off"
+                    />
+                    <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
                 </div>
-            )}
-            {frequency === 'x-times-a-day' && (
-                <div>
-                    <label htmlFor="timesPerDay">X times a day</label>
-                    <input type="number" id="timesPerDay" value={timesPerDay} onChange={(event) => setTimesPerDay(event.target.value)} />
-                    {timesPerDay > 0 && (
-                        <div>
-                            <p>Please enter the times you need to take the medication:</p>
-                            {times.map((time, index) => (
-                                <div key={index}>
-                                    <input type="time" value={time} onChange={(event) => handleTimeChange(event, index)} />
-                                    <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
-                                </div>
-                            ))}
-                            {times.length < timesPerDay && (
-                                <button type="button" onClick={handleAddTime}>Add Time</button>
-                            )}
-                        </div>
-                    )}
-                </div>
-            )}
+            ))}
+            <button type="button" onClick={handleAddTime}>Add Time</button>
+
             <div className="button-group">
-                <button type="submit" className="btn-primary">
-                    Add Medication
-                </button>
-                <button type="button" className="btn-secondary" onClick={onCancel}>
-                    Cancel
-                </button>
+                <button type="submit">Save Medication</button>
+                <button type="button" onClick={onCancel}>Cancel</button>
             </div>
         </form>
     );
 }
 
 export default MedicationForm;
+
+
+// import React, { useState } from 'react';
+// import { collection, addDoc } from 'firebase/firestore';
+// import db from '../components/Firebase';
+//
+// function MedicationForm({ onCancel }) {
+//     const [name, setName] = useState('');
+//     const [dosage, setDosage] = useState('');
+//     const [frequency, setFrequency] = useState('');
+//     const [times, setTimes] = useState([]);
+//
+//     const handleSubmit = async (event) => {
+//         event.preventDefault();
+//
+//         // Constructing the new medication object
+//         const newMedication = {
+//             name,
+//             dosage,
+//             frequency,
+//             times, // This could be an array of specific times or a single time
+//         };
+//
+//         try {
+//             // Adding the new medication to Firestore
+//             await addDoc(collection(db, "medications"), newMedication);
+//             console.log("New medication added to Firestore.");
+//             // Optionally, clear the form or provide feedback to the user here
+//
+//             // Reset form fields after submission
+//             setName('');
+//             setDosage('');
+//             setFrequency('');
+//             setTimes([]);
+//         } catch (error) {
+//             console.error("Error adding medication to Firestore: ", error);
+//         }
+//     };
+//
+//     // Handling dynamic input fields for times
+//     const handleAddTime = () => {
+//         setTimes([...times, '']); // Add a new empty time slot
+//     };
+//
+//     const handleTimeChange = (index, event) => {
+//         const newTimes = [...times];
+//         newTimes[index] = event.target.value; // Update the specific time
+//         setTimes(newTimes);
+//     };
+//
+//     const handleRemoveTime = (index) => {
+//         const newTimes = [...times];
+//         newTimes.splice(index, 1); // Remove the time at the specified index
+//         setTimes(newTimes);
+//     };
+//
+//     return (
+//         <form onSubmit={handleSubmit} className="add-medication-form">
+//             {/* Name input */}
+//             <div>
+//                 <label htmlFor="name">Medication Name:</label>
+//                 <input
+//                     type="text"
+//                     id="name"
+//                     value={name}
+//                     onChange={(e) => setName(e.target.value)}
+//                 />
+//             </div>
+//
+//             {/* Dosage input */}
+//             <div>
+//                 <label htmlFor="dosage">Dosage:</label>
+//                 <input
+//                     type="text"
+//                     id="dosage"
+//                     value={dosage}
+//                     onChange={(e) => setDosage(e.target.value)}
+//                 />
+//             </div>
+//
+//             {/* Frequency input */}
+//             <div>
+//                 <label htmlFor="frequency">Frequency:</label>
+//                 <input
+//                     type="text"
+//                     id="frequency"
+//                     value={frequency}
+//                     onChange={(e) => setFrequency(e.target.value)}
+//                 />
+//             </div>
+//
+//             {/* Dynamic times inputs */}
+//             {times.map((time, index) => (
+//                 <div key={index}>
+//                     <label htmlFor={`time-${index}`}>{`Time ${index + 1}:`}</label>
+//                     <input
+//                         type="time"
+//                         id={`time-${index}`}
+//                         value={time}
+//                         onChange={(e) => handleTimeChange(index, e)}
+//                     />
+//                     <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
+//                 </div>
+//             ))}
+//             <button type="button" onClick={handleAddTime}>Add Time</button>
+//
+//             {/* Form actions */}
+//             <div className="button-group">
+//                 <button type="submit">Save Medication</button>
+//                 <button type="button" onClick={onCancel}>Cancel</button>
+//             </div>
+//         </form>
+//     );
+// }
+//
+// export default MedicationForm;
+
+//this version is working
+// import React, { useState, useEffect } from 'react';
+//
+// function MedicationForm({ onSave, onCancel }) {
+//     const [name, setName] = useState('');
+//     const [frequency, setFrequency] = useState('');
+//     const [timesPerDay, setTimesPerDay] = useState('');
+//     const [times, setTimes] = useState([]);
+//     const [dosage, setDosage] = useState('');
+//
+//     useEffect(() => {
+//         const storedMedication = localStorage.getItem('medication');
+//         if (storedMedication) {
+//             const { name, frequency, timesPerDay, times, dosage } = JSON.parse(storedMedication);
+//             setName(name);
+//             setFrequency(frequency);
+//             setTimesPerDay(timesPerDay);
+//             setTimes(times);
+//             setDosage(dosage);
+//         }
+//     }, []);
+//
+//     const handleSubmit = (event) => {
+//         event.preventDefault();
+//
+//         let newFrequency = frequency;
+//         let newTimes = times;
+//
+//         if (frequency === 'x-times-a-day') {
+//             newFrequency = `${timesPerDay} times a day`;
+//             newTimes = times;
+//         }
+//
+//         const newMedication = {
+//             name,
+//             frequency: newFrequency,
+//             times: newTimes,
+//             dosage,
+//         };
+//
+//         onSave(newMedication);
+//
+//         localStorage.setItem('medication', JSON.stringify(newMedication));
+//
+//         setName('');
+//         setFrequency('');
+//         setTimesPerDay('');
+//         setTimes([]);
+//         setDosage('');
+//     };
+//
+//     const handleAddTime = () => {
+//         setTimes((prevTimes) => [...prevTimes, '']);
+//     };
+//
+//     const handleRemoveTime = (index) => {
+//         setTimes((prevTimes) => {
+//             const newTimes = [...prevTimes];
+//             newTimes.splice(index, 1);
+//             return newTimes;
+//         });
+//     };
+//
+//     const handleTimeChange = (event, index) => {
+//         const newTimes = [...times];
+//         newTimes[index] = event.target.value;
+//         setTimes(newTimes);
+//     };
+//
+//     return (
+//         <form className="add-medication-form" onSubmit={handleSubmit}>
+//             <div>
+//                 <label htmlFor="name">Medication Name</label>
+//                 <input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)} />
+//             </div>
+//             <div>
+//                 <label htmlFor="dosage">Dosage</label>
+//                 <input type="text" id="dosage" value={dosage} onChange={(event) => setDosage(event.target.value)} />
+//             </div>
+//             <div>
+//                 <label htmlFor="frequency">Frequency</label>
+//                 <select id="frequency" value={frequency} onChange={(event) => setFrequency(event.target.value)}>
+//                     <option value="">-- Select Frequency --</option>
+//                     <option value="x-times-a-day">X times a day</option>
+//                 </select>
+//             </div>
+//             {frequency === 'hourly' && (
+//                 <div>
+//                     <label htmlFor="timesPerDay">Every x hours</label>
+//                     <input type="number" id="timesPerDay" value={timesPerDay} onChange={(event) => setTimesPerDay(event.target.value)} />
+//                 </div>
+//             )}
+//             {frequency === 'x-times-a-day' && (
+//                 <div>
+//                     <label htmlFor="timesPerDay">X times a day</label>
+//                     <input type="number" id="timesPerDay" value={timesPerDay} onChange={(event) => setTimesPerDay(event.target.value)} />
+//                     {timesPerDay > 0 && (
+//                         <div>
+//                             <p>Please enter the times you need to take the medication:</p>
+//                             {times.map((time, index) => (
+//                                 <div key={index}>
+//                                     <input type="time" value={time} onChange={(event) => handleTimeChange(event, index)} />
+//                                     <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
+//                                 </div>
+//                             ))}
+//                             {times.length < timesPerDay && (
+//                                 <button type="button" onClick={handleAddTime}>Add Time</button>
+//                             )}
+//                         </div>
+//                     )}
+//                 </div>
+//             )}
+//             <div className="button-group">
+//                 <button type="submit" className="btn-primary">
+//                     Add Medication
+//                 </button>
+//                 <button type="button" className="btn-secondary" onClick={onCancel}>
+//                     Cancel
+//                 </button>
+//             </div>
+//         </form>
+//     );
+// }
+//
+// export default MedicationForm;
+
+
+
+
 
 
 // //local storage

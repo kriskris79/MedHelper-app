@@ -1,30 +1,99 @@
-import React from 'react';
-import Medication from './Medication';
+import React, { useEffect, useState } from 'react';
+import db from '../components/Firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import Medication from '../components/Medication';
 
-function MedicationList({ medications, toggleTaken, deleteMedication }) {
+function MedicationList() {
+    const [medications, setMedications] = useState([]);
+
+    useEffect(() => {
+        const fetchMedications = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "medications"));
+                const medsArray = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setMedications(medsArray);
+            } catch (error) {
+                console.error('Error fetching medications:', error);
+            }
+        };
+
+        fetchMedications();
+    }, []);
+
     return (
         <ul className="medication-list">
-            <li className="header">
-                <p className="name">My Medication</p>
-                <p className="dosage">Dosage</p>
-                <p className="frequency">Frequency</p>
-                <p className="time">Time</p>
-                <p className="taken">Taken</p>
-                <p className="delete">Delete Medication</p>
-            </li>
             {medications.map((medication) => (
-                <Medication
-                    key={medication.id}
-                    medication={medication}
-                    toggleTaken={toggleTaken}
-                    onDelete={deleteMedication}
-                />
+                <Medication key={medication.id} medication={medication} />
             ))}
         </ul>
     );
 }
 
 export default MedicationList;
+
+// import React, { useEffect, useState } from 'react';
+// import db from '../components/Firebase';
+// import { collection, getDocs } from 'firebase/firestore';
+// import Medication from '../components/Medication';
+//
+// function MedicationList() {
+//     const [medications, setMedications] = useState([]); // Ensure medications is initialized as an array
+//
+//     useEffect(() => {
+//         const fetchMedications = async () => {
+//             const querySnapshot = await getDocs(collection(db, "medications"));
+//             const medsArray = querySnapshot.docs.map(doc => ({
+//                 id: doc.id,
+//                 ...doc.data()
+//             }));
+//             setMedications(medsArray);
+//         };
+//
+//         fetchMedications();
+//     }, []);
+//
+//     return (
+//         <ul className="medication-list">
+//             {medications.map((medication) => ( // medications is guaranteed to be an array
+//                 <Medication key={medication.id} medication={medication} />
+//             ))}
+//         </ul>
+//     );
+// }
+//
+// export default MedicationList;
+
+//thi version is working
+// import React from 'react';
+// import Medication from './Medication';
+//
+// function MedicationList({ medications, toggleTaken, deleteMedication }) {
+//     return (
+//         <ul className="medication-list">
+//             <li className="header">
+//                 <p className="name">My Medication</p>
+//                 <p className="dosage">Dosage</p>
+//                 <p className="frequency">Frequency</p>
+//                 <p className="time">Time</p>
+//                 <p className="taken">Taken</p>
+//                 <p className="delete">Delete Medication</p>
+//             </li>
+//             {medications.map((medication) => (
+//                 <Medication
+//                     key={medication.id}
+//                     medication={medication}
+//                     toggleTaken={toggleTaken}
+//                     onDelete={deleteMedication}
+//                 />
+//             ))}
+//         </ul>
+//     );
+// }
+//
+// export default MedicationList;
 
 //
 // import React, { useState } from 'react';
