@@ -1,42 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import db from '../components/Firebase';
-import { collection, getDocs,deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc, updateDoc, getDoc } from 'firebase/firestore';
 import Medication from '../components/Medication';
 
 function MedicationList() {
     const [medications, setMedications] = useState([]);
 
-    useEffect(() => {
-        const fetchMedications = async () => {
-            try {
-                const querySnapshot = await getDocs(collection(db, "medications"));
-                const medsArray = querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                setMedications(medsArray);
-            } catch (error) {
-                console.error('Error fetching medications:', error);
-            }
-        };
+    // Define fetchMedications outside of useEffect to make it accessible elsewhere
+    const fetchMedications = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "medications"));
+            const medsArray = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setMedications(medsArray);
+        } catch (error) {
+            console.error('Error fetching medications:', error);
+        }
+    };
 
+    // Call fetchMedications inside useEffect
+    useEffect(() => {
         fetchMedications();
     }, []);
 
     const toggleTaken = async (id) => {
-        // Add your logic to toggle the 'taken' status
         const medicationRef = doc(db, "medications", id);
-        const medicationSnap = await getDocs(medicationRef);
+        const medicationSnap = await getDoc(medicationRef);
         if (medicationSnap.exists()) {
             await updateDoc(medicationRef, {
                 taken: !medicationSnap.data().taken
             });
+            // Call fetchMedications again to update the UI after toggling
+            fetchMedications();
+        } else {
+            console.log("No such medication document!");
         }
     };
 
     const onDelete = async (id) => {
-        // Add your logic to delete a medication
         await deleteDoc(doc(db, "medications", id));
+        // Filter out the deleted medication without needing to re-fetch the entire collection
         setMedications(medications.filter(medication => medication.id !== id));
     };
 
