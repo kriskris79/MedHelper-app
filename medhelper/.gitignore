@@ -23,7 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # new exlusions
-/src/components/Firebase.js
 /src/components/Server.js
 /src/components/Mysql.js
 /src/components/SQL.txt
