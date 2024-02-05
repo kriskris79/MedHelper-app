@@ -26,4 +26,5 @@ yarn-error.log*
 /src/components/Server.js
 /src/components/Mysql.js
 /src/components/SQL.txt
+/src/components/ServerTest.js
 .env
