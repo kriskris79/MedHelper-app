@@ -2,19 +2,19 @@
 import React from 'react';
 
 function Medication({ medication, toggleTaken, onDelete }) {
-    const { id, name, dosage, frequency, times, taken } = medication;
+    // Destructure medication properties and ensure 'taken' defaults to false if undefined
+    const { id, name, dosage, frequency, times, taken = false } = medication;
     let displayFrequency = frequency;
 
     if (frequency === 'x-times-a-day') {
         displayFrequency = `${times.length} times a day`;
     }
 
-
     const handleDelete = () => {
         if (window.confirm('Are you sure you want to delete this medication?')) {
             onDelete(id);
         }
-    }
+    };
 
     return (
         <li className={`medication ${taken ? 'taken' : ''}`}>
@@ -34,7 +34,7 @@ function Medication({ medication, toggleTaken, onDelete }) {
             <div className="taken">
                 <input
                     type="checkbox"
-                    checked={taken}
+                    checked={taken} // Ensure 'taken' is always boolean
                     onChange={() => toggleTaken(id)}
                 />
             </div>
@@ -45,9 +45,6 @@ function Medication({ medication, toggleTaken, onDelete }) {
     );
 }
 
-
 export default Medication;
-
-
 
 
