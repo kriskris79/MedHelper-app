@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import db from '../components/Firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs,deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import Medication from '../components/Medication';
 
 function MedicationList() {
@@ -23,10 +23,27 @@ function MedicationList() {
         fetchMedications();
     }, []);
 
+    const toggleTaken = async (id) => {
+        // Add your logic to toggle the 'taken' status
+        const medicationRef = doc(db, "medications", id);
+        const medicationSnap = await getDocs(medicationRef);
+        if (medicationSnap.exists()) {
+            await updateDoc(medicationRef, {
+                taken: !medicationSnap.data().taken
+            });
+        }
+    };
+
+    const onDelete = async (id) => {
+        // Add your logic to delete a medication
+        await deleteDoc(doc(db, "medications", id));
+        setMedications(medications.filter(medication => medication.id !== id));
+    };
+
     return (
         <ul className="medication-list">
             {medications.map((medication) => (
-                <Medication key={medication.id} medication={medication} />
+                <Medication key={medication.id} medication={medication} toggleTaken={() => toggleTaken(medication.id)} onDelete={() => onDelete(medication.id)} />
             ))}
         </ul>
     );
