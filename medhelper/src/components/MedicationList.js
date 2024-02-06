@@ -51,6 +51,14 @@ function MedicationList() {
             <button onClick={handleShowForm} style={{ margin: '10px' }}>Add Medication</button>
             {showForm && <MedicationForm onCancel={handleHideForm} onAddMedication={fetchMedications} />}
             <ul className="medication-list">
+                <li className="medication header">
+                    <div className="name">Medication Name</div>
+                    <div className="dosage">Dosage</div>
+                    <div className="frequency">Frequency</div>
+                    <div className="times">Time</div>
+                    <div className="taken">Taken</div>
+                    <div className="delete">Delete</div>
+                </li>
                 {medications.map((medication) => (
                     <Medication
                         key={medication.id}
