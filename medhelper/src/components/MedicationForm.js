@@ -1,96 +1,45 @@
-// // still problems witch auto refreshing
-// import React, { useState } from 'react';
-// import { collection, addDoc } from 'firebase/firestore';
-// import db from './Firebase'; // Adjust the import path as needed
-//
-// function MedicationForm({ onMedicationAdded }) {
-//     const [name, setName] = useState('');
-//     const [dosage, setDosage] = useState('');
-//     const [frequency, setFrequency] = useState('');
-//     const [times, setTimes] = useState([]);
-//
-//     const handleSubmit = async (event) => {
-//         event.preventDefault();
-//         const newMedication = {
-//             name,
-//             dosage,
-//             frequency,
-//             times,
-//         };
-//
-//         try {
-//             await addDoc(collection(db, "medications"), newMedication);
-//             console.log("New medication added to Firestore.");
-//             setName('');
-//             setDosage('');
-//             setFrequency('');
-//             setTimes([]);
-//
-//             // Call onMedicationAdded to refresh the list in the parent component
-//             if (onMedicationAdded) {
-//                 onMedicationAdded();
-//             }
-//         } catch (error) {
-//             console.error("Error adding medication to Firestore:", error);
-//         }
-//     };
-//
-//     return (
-//         <form onSubmit={handleSubmit} className="add-medication-form">
-//             {/* Form inputs and buttons here */}
-//             {/* ... */}
-//         </form>
-//     );
-// }
-//
-// export default MedicationForm;
-
-//check box is working fine now but db is not refreshing
 import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import db from '../components/Firebase';
 
-function MedicationForm({ onCancel }) {
+function MedicationForm({ onCancel, onAddMedication }) {
     const [name, setName] = useState('');
     const [dosage, setDosage] = useState('');
     const [frequency, setFrequency] = useState('');
-    const [times, setTimes] = useState([]);
+    const [times, setTimes] = useState(['']); // Initialize with one empty string for one time input
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        const newMedication = {
-            name,
-            dosage,
-            frequency,
-            times,
-        };
-
+        const newMedication = { name, dosage, frequency, times: times.filter(time => time) }; // Filter out any empty strings
         try {
             await addDoc(collection(db, "medications"), newMedication);
-            console.log("New medication added to Firestore.");
+            // Reset form fields and close form
             setName('');
             setDosage('');
             setFrequency('');
-            setTimes([]);
+            setTimes(['']); // Reset to initial state with one empty string
+            onAddMedication(); // Refresh the medication list
+            onCancel(); // Close the form
         } catch (error) {
             console.error("Error adding medication to Firestore: ", error);
         }
     };
 
+    // Function to add a new time input
     const handleAddTime = () => {
         setTimes([...times, '']);
     };
 
+    // Function to handle changing of any time input
     const handleTimeChange = (index, event) => {
         const newTimes = [...times];
         newTimes[index] = event.target.value;
         setTimes(newTimes);
     };
 
+    // Function to remove a specific time input
     const handleRemoveTime = (index) => {
-        const newTimes = [...times];
-        newTimes.splice(index, 1);
+        const newTimes = times.filter((_, i) => i !== index);
         setTimes(newTimes);
     };
 
@@ -131,7 +80,7 @@ function MedicationForm({ onCancel }) {
 
             {times.map((time, index) => (
                 <div key={index}>
-                    <label htmlFor={`time-${index}`}>{`Time ${index + 1}:`}</label>
+                    <label htmlFor={`time-${index}`}>Time {index + 1}:</label>
                     <input
                         type="time"
                         id={`time-${index}`}
@@ -139,7 +88,9 @@ function MedicationForm({ onCancel }) {
                         onChange={(e) => handleTimeChange(index, e)}
                         autoComplete="off"
                     />
-                    <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
+                    {times.length > 1 && (
+                        <button type="button" onClick={() => handleRemoveTime(index)}>Remove</button>
+                    )}
                 </div>
             ))}
             <button type="button" onClick={handleAddTime}>Add Time</button>
@@ -153,6 +104,7 @@ function MedicationForm({ onCancel }) {
 }
 
 export default MedicationForm;
+
 
 
 

@@ -1,4 +1,3 @@
-//firebase
 import React from 'react';
 
 function Medication({ medication, toggleTaken, onDelete }) {
