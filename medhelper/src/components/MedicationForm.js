@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
-import db from '../components/Firebase';
+import db from '../config/Firebase';
 
 function MedicationForm({ onCancel, onAddMedication }) {
     const [name, setName] = useState('');
