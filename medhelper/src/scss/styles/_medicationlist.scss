@@ -3,173 +3,170 @@
   padding: 0;
   margin: 0;
   width: 100%;
+}
 
-  li {
-    display: grid;
-    grid-template-columns:  0.25fr 0.25fr 0.25fr 0.25fr 0.25fr 0.25fr;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    transition: background-color 0.2s ease-in-out;
-    justify-items: start;
-    &:hover {
-      cursor: pointer;
-      background-color: #e0e0e0;
-    }
+.medication-list li {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  transition: background-color 0.2s ease-in-out;
+  justify-items: start;
+}
 
-    &.taken {
-      background-color: #d0d0d0;
-    }
+.medication-list li:hover {
+  cursor: pointer;
+  background-color: #e0e0e0;
+}
+
+.medication-list li.taken {
+  background-color: #d0d0d0;
+}
+
+.medication-list .name {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.medication-list .dosage,
+.medication-list .frequency,
+.medication-list .time {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.medication-list .header {
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Extra small devices (Phones) */
+@media screen and (max-width: 576px) {
+  .medication-list li {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    text-align: center;
   }
 
-  .name {
+  .medication-list .name,
+  .medication-list .dosage,
+  .medication-list .frequency,
+  .medication-list .time {
+    font-size: 1rem;
+  }
+
+  .medication-list .header {
+    font-size: 1.2rem;
+  }
+}
+
+/* Small devices (Tablets) */
+@media screen and (min-width: 577px) and (max-width: 768px) {
+  .medication-list li {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    text-align: left;
+  }
+
+  .medication-list .name {
+    font-size: 1.3rem;
+  }
+
+  .medication-list .dosage,
+  .medication-list .frequency {
+    font-size: 1.1rem;
+  }
+
+  .medication-list .time {
+    font-size: 1rem;
+  }
+
+  .medication-list .header {
+    font-size: 1.2rem;
+  }
+}
+
+/* Medium devices (Desktops) */
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .medication-list .name {
+    font-size: 1.4rem;
+  }
+
+  .medication-list .dosage,
+  .medication-list .frequency {
+    font-size: 1.2rem;
+  }
+
+  .medication-list .time {
+    font-size: 1rem;
+  }
+
+  .medication-list .header {
+    font-size: 1.3rem;
+  }
+}
+
+/* Large devices (Desktops) */
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+  .medication-list .name {
     font-size: 1.5rem;
-    margin: 0;
   }
 
-  .dosage,
-  .frequency {
-    font-size: 1rem;
-    margin: 0;
+  .medication-list .dosage,
+  .medication-list .frequency {
+    font-size: 1.3rem;
   }
 
-  .time {
-    font-size: 1rem;
-    margin: 0;
-    text-align: center;
+  .medication-list .time {
+    font-size: 1.1rem;
   }
 
-  .header {
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
+  .medication-list .header {
+    font-size: 1.4rem;
+  }
+}
+
+/* Extra large devices (Desktops) */
+@media screen and (min-width: 1201px) {
+  .medication-list .name {
+    font-size: 1.6rem;
   }
 
-  /* Extra small devices (Phones) */
-  @media screen and (max-width: 576px) {
-    li {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto auto auto;
-      text-align: center;
-    }
-
-    .name {
-      font-size: 1.0rem;
-    }
-
-    .dosage,
-    .frequency,
-    .time {
-      font-size: 1rem;
-    }
+  .medication-list .dosage,
+  .medication-list .frequency {
+    font-size: 1.4rem;
   }
 
-  /* Small devices (Tablets) */
-  @media screen and (min-width: 577px) and (max-width: 768px) {
-    li {
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: auto auto;
-      text-align: left;
-    }
-
-    .name {
-      font-size: 1.3rem;
-    }
-
-    .dosage,
-    .frequency {
-      font-size: 1.1rem;
-    }
-
-    .time {
-      font-size: 1rem;
-    }
-
-    .header {
-      font-size: 1.2rem;
-    }
+  .medication-list .time {
+    font-size: 1.2rem;
   }
 
-  /* Medium devices (Desktops) */
-  @media screen and (min-width: 769px) and (max-width: 992px) {
-    .name {
-      font-size: 1.4rem;
-    }
+  .medication-list .header {
+    font-size: 1.5rem;
+  }
+}
 
-    .dosage,
-    .frequency {
-      font-size: 1.2rem;
-    }
-
-    .time {
-      font-size: 1rem;
-    }
-
-    .header {
-      font-size: 1.3rem;
-    }
+/* Extra extra large devices (Desktops) */
+@media screen and (min-width: 1201px) {
+  .medication-list .name {
+    font-size: 1.7rem;
   }
 
-  /* Large devices (Desktops) */
-  @media screen and (min-width: 993px) and (max-width: 1200px) {
-    .name {
-      font-size: 1.5rem;
-    }
-
-    .dosage,
-    .frequency {
-      font-size: 1.3rem;
-    }
-
-    .time {
-      font-size: 1.1rem;
-    }
-
-    .header {
-      font-size: 1.4rem;
-    }
+  .medication-list .dosage,
+  .medication-list .frequency {
+    font-size: 1.5rem;
   }
 
-  /* Extra large devices (Desktops) */
-  @media screen and (min-width: 1201px) {
-    .name {
-      font-size: 1.6rem;
-    }
-
-    .dosage,
-    .frequency {
-      font-size: 1.4rem;
-    }
-
-    .time {
-      font-size: 1.2rem;
-    }
-
-    .header {
-      font-size: 1.5rem;
-    }
+  .medication-list .time {
+    font-size: 1.3rem;
   }
 
-  /* Extra extra large devices (Desktops) */
-  @media screen and (min-width: 1201px) {
-    .name {
-      font-size: 1.7rem;
-    }
-
-    .dosage,
-    .frequency {
-      font-size: 1.5rem;
-    }
-
-    .time {
-      font-size: 1.3rem;
-    }
-
-    .header {
-      font-size: 1.6rem;
-    }
+  .medication-list .header {
+    font-size: 1.6rem;
   }
-  }
+}
