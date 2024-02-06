@@ -11,10 +11,17 @@ function MedicationList() {
     const fetchMedications = async () => {
         try {
             const querySnapshot = await getDocs(collection(db, "medications"));
-            const medsArray = querySnapshot.docs.map(doc => ({
+            let medsArray = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
+
+            medsArray = medsArray.sort((a, b) => {
+                const timeA = a.times && a.times[0] ? a.times[0] : '23:59';
+                const timeB = b.times && b.times[0] ? b.times[0] : '23:59';
+                return timeA.localeCompare(timeB);
+            });
+
             setMedications(medsArray);
         } catch (error) {
             console.error('Error fetching medications:', error);
@@ -28,12 +35,12 @@ function MedicationList() {
     const toggleTaken = async (id) => {
         const medicationRef = doc(db, "medications", id);
         await updateDoc(medicationRef, { taken: !medications.find(med => med.id === id).taken });
-        fetchMedications(); // Refresh list after updating
+        fetchMedications();
     };
 
     const onDelete = async (id) => {
         await deleteDoc(doc(db, "medications", id));
-        fetchMedications(); // Refresh list after deleting
+        fetchMedications();
     };
 
     const handleHideForm = () => setShowForm(false);
@@ -41,24 +48,15 @@ function MedicationList() {
 
     return (
         <div>
-            <button onClick={handleShowForm}>Add Medication</button>
+            <button onClick={handleShowForm} style={{ margin: '10px' }}>Add Medication</button>
             {showForm && <MedicationForm onCancel={handleHideForm} onAddMedication={fetchMedications} />}
-
             <ul className="medication-list">
-                <li className="medication header">
-                    <div className="name">Medication Name</div>
-                    <div className="dosage">Dosage</div>
-                    <div className="frequency">Frequency</div>
-                    <div className="times">Time</div>
-                    <div className="taken">Taken</div>
-                    <div className="delete">Delete</div>
-                </li>
                 {medications.map((medication) => (
                     <Medication
                         key={medication.id}
                         medication={medication}
-                        toggleTaken={() => toggleTaken(medication.id)}
-                        onDelete={() => onDelete(medication.id)}
+                        toggleTaken={toggleTaken}
+                        onDelete={onDelete}
                     />
                 ))}
             </ul>
@@ -67,3 +65,4 @@ function MedicationList() {
 }
 
 export default MedicationList;
+
