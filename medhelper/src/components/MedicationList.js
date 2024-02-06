@@ -52,7 +52,7 @@ function MedicationList() {
             {showForm && <MedicationForm onCancel={handleHideForm} onAddMedication={fetchMedications} />}
             <ul className="medication-list">
                 <li className="medication header">
-                    <div className="name">Medication Name</div>
+                    <div className="name">Medication</div>
                     <div className="dosage">Dosage</div>
                     <div className="frequency">Frequency</div>
                     <div className="times">Time</div>
