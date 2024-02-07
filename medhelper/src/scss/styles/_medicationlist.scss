@@ -28,14 +28,14 @@
 }
 
 .medication-list .name {
-  font-size: 1.5rem;
+  font-size: 1.0rem;
   margin: 0;
 }
 
 .medication-list .dosage,
 .medication-list .frequency,
 .medication-list .time {
-  font-size: 1rem;
+  font-size: 2rem;
   margin: 0;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .name {
-  font-size: 1.5rem;
+  font-size: 1.0rem;
   margin: 0;
   font-weight: bold;
 }
@@ -79,7 +79,7 @@
   }
 
   .medication-list .header {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
 
@@ -92,12 +92,12 @@
   }
 
   .medication-list .name {
-    font-size: 1.3rem;
+    font-size: 1.0rem;
   }
 
   .medication-list .dosage,
   .medication-list .frequency {
-    font-size: 1.1rem;
+    font-size: 1.0rem;
   }
 
   .medication-list .time {
@@ -105,14 +105,14 @@
   }
 
   .medication-list .header {
-    font-size: 1.2rem;
+    font-size: 1.0rem;
   }
 }
 
 /* Medium devices (Desktops) */
 @media screen and (min-width: 769px) and (max-width: 992px) {
   .medication-list .name {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 
   .medication-list .dosage,
@@ -121,11 +121,11 @@
   }
 
   .medication-list .time {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .medication-list .header {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -137,15 +137,15 @@
 
   .medication-list .dosage,
   .medication-list .frequency {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
 
   .medication-list .time {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
   }
 
   .medication-list .header {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -157,11 +157,11 @@
 
   .medication-list .dosage,
   .medication-list .frequency {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 
   .medication-list .time {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
   }
 
   .medication-list .header {
@@ -177,14 +177,14 @@
 
   .medication-list .dosage,
   .medication-list .frequency {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 
   .medication-list .time {
-    font-size: 1.3rem;
+    font-size: 1.7rem;
   }
 
   .medication-list .header {
-    font-size: 1.6rem;
+    font-size: 1.7rem;
   }
 }

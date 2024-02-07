@@ -1,6 +1,6 @@
 import React from 'react';
 import './scss/styles/_app.scss';
-import "./scss/generic/_main.scss";
+import "./scss/styles/_main.scss";
 import MedicationList from './components/MedicationList';
 
 function App() {
