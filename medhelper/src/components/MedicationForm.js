@@ -34,6 +34,7 @@ function MedicationForm({ onCancel, onAddMedication }) {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     autoComplete="off"
+                                   placeholder="Please provide the medication name"
                                 />
                             </div>
 
@@ -45,6 +46,7 @@ function MedicationForm({ onCancel, onAddMedication }) {
                                     value={dosage}
                                     onChange={(e) => setDosage(e.target.value)}
                                     autoComplete="off"
+                                    placeholder="Please specify the dosage. For example, '200mg in the morning.'"
                                 />
                             </div>
 
@@ -56,6 +58,7 @@ function MedicationForm({ onCancel, onAddMedication }) {
                                     value={frequency}
                                     onChange={(e) => setFrequency(e.target.value)}
                                     autoComplete="off"
+                                    placeholder="Please specify the frequency. If multiple doses, specify times."
                                 />
                             </div>
             <div>
