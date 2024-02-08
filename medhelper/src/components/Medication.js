@@ -22,9 +22,12 @@ function Medication({ medication, toggleTaken, onDelete }) {
             <div className="taken">
                 <input
                     type="checkbox"
+                    id={`taken-${id}`}
+                    name={`taken-${id}`}
                     checked={taken}
                     onChange={() => toggleTaken(id)}
                 />
+                <label htmlFor={`taken-${id}`} className="visually-hidden">Taken</label>
             </div>
             <div className="delete">
                 <button onClick={handleDelete}>Delete</button>
@@ -34,5 +37,6 @@ function Medication({ medication, toggleTaken, onDelete }) {
 }
 
 export default Medication;
+
 
 

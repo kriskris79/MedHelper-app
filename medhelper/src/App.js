@@ -25,7 +25,7 @@ function App() {
         try {
             await signOut(auth);
             setUser(null); // Clear the user state
-            // Optional: redirect to home
+
         } catch (error) {
             console.error('Error signing out: ', error);
         }
@@ -43,10 +43,9 @@ function App() {
                             <Link to="/register">Register</Link>
                         </>
                     ) : (
-                        // If user is logged in, show logout and medications
+                        // If user is logged in, show logout
                         <>
                             <button onClick={handleLogout}>Logout</button>
-                            <Link to="/medications">Medications</Link>
                         </>
                     )}
                 </nav>

@@ -27,10 +27,28 @@ function Register() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-                <button type="submit">Register</button>
+            <form onSubmit={handleSubmit} className="register-form">
+                <input
+                    type="email"
+                    id="register-email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    required
+                    autoComplete="email"
+                />
+                <input
+                    type="password"
+                    id="register-password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                    autoComplete="new-password"
+                />
+                <button type="submit" className="register-button">Register</button>
             </form>
         </div>
     );
