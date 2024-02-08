@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import db from '../config/Firebase';
+import { db } from '../config/Firebase';
 import { collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import Medication from '../components/Medication';
 import MedicationForm from '../components/MedicationForm';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth } from '../firebase/config';
+import { auth } from '../config/Firebase';
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 
 function Register() {
