@@ -17,6 +17,7 @@ function MedicationForm({ onCancel, onAddMedication, userId }) { // Accept userI
             frequency,
             times: time ? [time] : [],
             userId // Use the passed userId
+
         };
 
         try {
