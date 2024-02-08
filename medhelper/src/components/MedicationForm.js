@@ -11,12 +11,13 @@ function MedicationForm({ onCancel, onAddMedication, userId }) { // Accept userI
     const handleSubmit = async (event) => {
         event.preventDefault();
         // Ensure 'userId' is included in the new document
+        console.log("Current User ID:", userId); // test Debugging line
         const newMedication = {
             name,
             dosage,
             frequency,
             times: time ? [time] : [],
-            userId // Use the passed userId
+            userId: userId,  // Use the passed userId
 
         };
 
@@ -31,6 +32,7 @@ function MedicationForm({ onCancel, onAddMedication, userId }) { // Accept userI
             if (onCancel) onCancel(); // Optionally close the form
         } catch (error) {
             console.error("Error adding medication to Firestore: ", error);
+            alert("Error adding medication: " + error.message); // test Provide feedback to the user
         }
     };
 
