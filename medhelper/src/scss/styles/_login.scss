@@ -1,12 +1,10 @@
 .login-form {
-  /* Styles for your login form container */
   display: flex;
   flex-direction: column;
   max-width: 300px;
   margin: 2rem auto;
 
   input {
-    /* Style your input fields */
     margin-bottom: 1rem;
     padding: 0.5rem;
     border: 1px solid #ccc;
@@ -14,7 +12,6 @@
   }
 
   .login-button {
-    /* Specific style for the login button */
     padding: 0.75rem;
     border: none;
     border-radius: 5px;

@@ -39,8 +39,8 @@ function App() {
                     {!user ? (
                         // If user is not logged in, show login/register
                         <>
-                            <Link to="/login">Login</Link>
-                            <Link to="/register">Register</Link>
+                            <Link to="/login" className="nav-link">Login </Link>
+                            <Link to="/register" className="nav-link">Register</Link>
                         </>
                     ) : (
                         // If user is logged in, show logout
