@@ -1,18 +1,21 @@
 // User login with email and password
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../config/Firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Hook for navigation
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            alert("Logged in successfully!");
-            // Here, redirect the user or handle login success
+            alert("Logged in successfully to 'My Medications List'!");
+            // Redirect the user or handle login success
+            navigate('/medications'); // Redirect the user to the medications page
         } catch (error) {
             alert(`Login failed: ${error.message}`);
         }
@@ -30,3 +33,4 @@ function Login() {
 }
 
 export default Login;
+
