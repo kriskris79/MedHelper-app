@@ -1,8 +1,27 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+    // Match any document 
+    match /medications/{medicationId} {
+      // Allow read if the user's UID matches the document's
+      allow read: if request.auth.uid == resource.data.userId;
+
+      // Allow create and update if the userId is being set to the authenticated user's UID
+      allow create, update: if request.auth.uid == request.resource.data.userId;
+
+      // Allow delete if the authenticated user's UID matches the document's userId
+      // This relies on the existing document's userId for permission checking
+      allow delete: if request.auth.uid == resource.data.userId;
     }
   }
 }
+
+
+//rules_version = '2';
+//service cloud.firestore {
+//match /databases/{database}/documents {
+   // match /{document=**} {
+//allow read, write: if request.auth != null;
+   // }
+ // }
+//}
