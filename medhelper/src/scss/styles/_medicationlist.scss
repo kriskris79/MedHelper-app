@@ -27,15 +27,11 @@
   background-color: #d0d0d0;
 }
 
-.medication-list .name {
-  font-size: 1.0rem;
-  margin: 0;
-}
-
+.medication-list .name,
 .medication-list .dosage,
 .medication-list .frequency,
 .medication-list .time {
-  font-size: 2rem;
+  font-size: 1rem;
   margin: 0;
 }
 
@@ -45,41 +41,35 @@
   text-align: center;
 }
 
-.name {
-  font-size: 1.0rem;
-  margin: 0;
-  font-weight: bold;
-}
-
-.dosage,
-.frequency {
-  font-size: 1rem;
-  margin: 0;
-}
-
-.times {
-  font-size: 1rem;
-  margin: 0;
-  text-align: left;
-}
-
 /* Extra small devices (Phones) */
 @media screen and (max-width: 576px) {
   .medication-list li {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto auto;
-    text-align: center;
+    grid-gap: 10px;
+    text-align: left;
   }
 
-  .medication-list .name,
-  .medication-list .dosage,
-  .medication-list .frequency,
-  .medication-list .time {
-    font-size: 1rem;
+  .medication-list li > div {
+    &:before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 10px;
+      display: inline-block;
+      width: 100px;
+    }
   }
 
   .medication-list .header {
-    font-size: 1rem;
+    display: none;
+  }
+
+  .medication-list .taken,
+  .medication-list .delete {
+    justify-content: flex-start;
+  }
+
+  .medication-list .delete button {
+    margin-top: 10px;
   }
 }
 
@@ -188,3 +178,9 @@
     font-size: 1.7rem;
   }
 }
+
+
+
+
+
+

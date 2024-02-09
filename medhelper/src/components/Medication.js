@@ -11,10 +11,10 @@ function Medication({ medication, toggleTaken, onDelete }) {
 
     return (
         <li className={`medication ${taken ? 'taken' : ''}`}>
-            <div className="name">{name}</div>
-            <div className="dosage">{dosage}</div>
-            <div className="frequency">{frequency}</div>
-            <div className="times">
+            <div className="name" data-label="Medication: ">{name}</div>
+            <div className="dosage" data-label="Dosage: ">{dosage}</div>
+            <div className="frequency" data-label="Frequency: ">{frequency}</div>
+            <div className="times" data-label="Time: ">
                 {times && times.map((time, index) => (
                     <span key={index}>{time}</span>
                 ))}
