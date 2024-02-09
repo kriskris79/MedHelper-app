@@ -48,7 +48,7 @@ function MedicationList() {
 
     return (
         <div>
-            <button onClick={handleShowForm} style={{ margin: '10px' }}>Add Medication</button>
+            <button className="add-medication-button" onClick={handleShowForm} style={{ margin: '10px' }}>Add Medication</button>
             {showForm && <MedicationForm onCancel={handleHideForm} onAddMedication={fetchMedications} userId={user?.uid} />}
             <ul className="medication-list">
                 <li className="medication header">

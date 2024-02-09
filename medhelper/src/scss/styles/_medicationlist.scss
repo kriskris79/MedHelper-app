@@ -41,6 +41,24 @@
   text-align: center;
 }
 
+.medication-number {
+  font-weight: bold; // Make the number bold
+  margin-right: 0.5rem; // Add some margin to the right of the number
+  // Additional styles as needed
+}
+
+.add-medication-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #009688;
+  color: #fff;
+  font-size: 1rem;
+  &:hover {
+    background-color: darken(#009688, 5%);
+  }
+}
 /* Extra small devices (Phones) */
 @media screen and (max-width: 576px) {
   .medication-list li {
@@ -177,6 +195,9 @@
   .medication-list .header {
     font-size: 1.7rem;
   }
+
+
+
 }
 
 
