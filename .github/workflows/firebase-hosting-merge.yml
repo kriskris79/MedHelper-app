@@ -16,6 +16,8 @@ jobs:
       # Change to the directory containing package.json before building
       - name: Change to app directory
         run: cd medhelper
+      - name: Change to app directory
+        run: cd medhelper
       - name: Install dependencies
         run: npm install
       - name: Build
