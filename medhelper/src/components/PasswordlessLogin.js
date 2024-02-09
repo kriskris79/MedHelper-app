@@ -1,4 +1,3 @@
-// Initiating passwordless sign-in
 import React, { useState } from 'react';
 import { auth } from '../config/Firebase';
 import { sendSignInLinkToEmail } from "firebase/auth";
