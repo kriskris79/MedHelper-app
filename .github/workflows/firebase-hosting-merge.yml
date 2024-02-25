@@ -25,3 +25,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEDAPP2_226B0 }}'
           channelId: live
           projectId: medapp2-226b0
+          working-directory: ./medhelper
